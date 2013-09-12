@@ -1,0 +1,40 @@
+100000 rounds of #TicTacToe
+total games: 100000
+X wins 58630 matches
+O wins 28673 matches
+draws 12697 matches
+playtime: 301.5830369
+
+without console output:
+total games: 100000
+X wins 58540 matches
+O wins 29004 matches
+draws  12456 matches
+playtime: 341.045141935
+
+without debugger:
+total games: 100000
+X wins 58541 matches
+O wins 28722 matches
+draws  12737 matches
+playtime: 19.3988301754
+
+with pypy 1.8
+total games: 100000
+X wins 58525 matches
+O wins 28901 matches
+draws  12574 matches
+playtime: 2.4957408905
+
+with pypy 2.0.2
+total games: 100000
+X wins 58360 matches
+O wins 28685 matches
+draws  12955 matches
+playtime: 2.07105302811
+
+total games: 1000000000
+X wins 584929792 matches
+O wins 288098132 matches
+draws  126972076 matches
+playtime: 14619.680752

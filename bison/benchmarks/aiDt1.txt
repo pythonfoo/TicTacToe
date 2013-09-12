@@ -1,0 +1,27 @@
+# as X with srategic
+total games: 100000
+X wins 97724 matches
+O wins 130 matches
+draws  2146 matches
+playtime: 20.3621680737
+
+# as X without srategic
+total games: 100000
+X wins 94496 matches
+O wins 299 matches
+draws  5205 matches
+playtime: 18.9176859856
+
+# as O with srategic
+total games: 100000
+X wins 3143 matches
+O wins 81644 matches
+draws  15213 matches
+playtime: 21.0086820126
+
+# as O without strategic
+total games: 100000
+X wins 3602 matches
+O wins 75165 matches
+draws  21233 matches
+playtime: 20.3300380707
