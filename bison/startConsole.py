@@ -25,6 +25,7 @@ aiGameRounds = 0
 drawGameField = True
 if players[1] == "ai" and players[2] == "ai":
 	aiGameRounds = ic.chooseAiGameRounds()
+	gl.setExport(aiGameRounds)
 	drawGameField = False
 
 startTime = time.time()
@@ -70,5 +71,6 @@ while keepPlaying:
 				aiAction = aiInstances[nextPlayer].getAiAction(gl.getField())
 				setWasOk = gl.setPlayer(aiAction)
 
+gl.saveExport()
 print ''
 print "playtime:", time.time() - startTime
