@@ -1,4 +1,4 @@
-class ai(object):
+class ai():
     def __init__(self, playerId):
         self.playerId = playerId
 

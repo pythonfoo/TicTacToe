@@ -2,7 +2,7 @@ import os
 import importlib
 
 
-class interfaceAi(object):
+class interfaceAi():
     def __init__(self):
         self.playerId = 0
         self.aiMap = None
@@ -38,8 +38,8 @@ if __name__ == "__main__":
     gl = gameLogic.gameLogic()
     gl.startGame()
     ifAi = interfaceAi()
-    print "Ai-list:", ifAi.getAiList()
-    ifAi.initAi(int(raw_input("choose ai:")), 1)
+    print("Ai-list:", ifAi.getAiList())
+    ifAi.initAi(int(input("choose ai:")), 1)
     gl.getNextPlayer()
     gl.setPlayer(ifAi.getAiAction(None))
-    print gl.getField()
+    print(gl.getField())

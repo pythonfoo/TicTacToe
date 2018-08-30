@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import time
 from gameLogic import gameLogic
 from interfaceConsole import console
@@ -26,7 +24,8 @@ drawGameField = True
 if players[1] == "ai" and players[2] == "ai":
     aiGameRounds = ic.chooseAiGameRounds()
     gl.setExport(aiGameRounds)
-    drawGameField = False
+    # print game field for every move
+    #drawGameField = False
 
 startTime = time.time()
 keepPlaying = True
@@ -59,7 +58,7 @@ while keepPlaying:
 
         if drawGameField:
             ic.printGameField(gl.getField())
-            print "Player", ic.getPlayerName(nextPlayer)
+            print("Player", ic.getPlayerName(nextPlayer))
 
         if players[nextPlayer] == "user":
             setWasOk = False
@@ -72,5 +71,5 @@ while keepPlaying:
                 setWasOk = gl.setPlayer(aiAction)
 
 gl.saveExport()
-print ''
-print "playtime:", time.time() - startTime
+print('')
+print("playtime:", time.time() - startTime)

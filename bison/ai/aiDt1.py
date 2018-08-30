@@ -1,11 +1,11 @@
-import basic
+import ai.basic as basicAi
 import random
 
 
-class ai(basic.ai):
+class ai(basicAi.ai):
     def __init__(self, playerId):
         # init the basic ai class
-        super(ai, self).__init__(playerId)
+        basicAi.ai.__init__(self, playerId)
 
         self.enemyId = 0
         if self.playerId == 1:
@@ -187,33 +187,33 @@ if __name__ == "__main__":
     gameField = [[1, 0, 0],
                  [0, 2, 0],
                  [0, 1, 0]]
-    print 'action:', _ai.getAiAction(gameField)
+    print('action:', _ai.getAiAction(gameField))
 
     # check left-right
     _ai = ai(2)
     gameField = [[2, 0, 0],
                  [0, 0, 0],
                  [1, 1, 0]]
-    print 'action:', _ai.getAiAction(gameField)
+    print('action:', _ai.getAiAction(gameField))
 
     # check top-down
     _ai = ai(2)
     gameField = [[2, 1, 0],
                  [0, 1, 0],
                  [0, 0, 0]]
-    print 'action:', _ai.getAiAction(gameField)
+    print('action:', _ai.getAiAction(gameField))
 
     # check diag Lo-Ru
     _ai = ai(1)
     gameField = [[2, 1, 0],
                  [0, 2, 0],
                  [1, 0, 0]]
-    print 'action:', _ai.getAiAction(gameField)
+    print('action:', _ai.getAiAction(gameField))
 
     # check diag Ro-Lu
     _ai = ai(1)
     gameField = [[0, 1, 2],
                  [0, 2, 0],
                  [0, 0, 1]]
-    print 'action:', _ai.getAiAction(gameField)
+    print('action:', _ai.getAiAction(gameField))
 

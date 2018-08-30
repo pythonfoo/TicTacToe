@@ -1,11 +1,11 @@
-import basic
+import ai.basic as basicAi
 import random
 
 
-class ai(basic.ai):
+class ai(basicAi.ai):
     def __init__(self, playerId):
         # init the basic ai class
-        super(ai, self).__init__(playerId)
+        basicAi.ai.__init__(self, playerId)
         self.fieldSize = range(3)
 
     def _getFreePositions(self, gameField):

@@ -7,10 +7,10 @@ import pickle
 import numpy as np
 import modules.exportGames
 
-class gameLogic(object):
+class gameLogic():
     def __init__(self):
-        self.coord = range(3)
-        self.reversedCoord = range(3)
+        self.coord = list(range(3))
+        self.reversedCoord = list(range(3))
         self.reversedCoord.reverse()
 
         self.emptyField = [0, 0, 0]
@@ -175,9 +175,9 @@ class gameLogic(object):
 if __name__ == "__main__":
     gl = gameLogic()
     gl.startGame()
-    print gl.getCurrentPlayer()
-    print gl.getNextPlayer()
-    print gl.getWinner()
+    print(gl.getCurrentPlayer())
+    print(gl.getNextPlayer())
+    print(gl.getWinner())
     #print gl.getField()
 
     # BAD for full field check ;)

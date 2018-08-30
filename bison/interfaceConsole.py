@@ -1,7 +1,7 @@
 import interfaceAi
 
 
-class console(object):
+class console():
     def __init__(self):
         self.yes = ("yes", "ja", "y", "j", "1", "")
         self.no = ("no", "nein", "n", "0")
@@ -12,13 +12,13 @@ class console(object):
         ifAi = interfaceAi.interfaceAi()
         while not validAnswer:
             aiList = ifAi.getAiList()
-            print "choose AI for", self.getPlayerName(playerId)
+            print("choose AI for", self.getPlayerName(playerId))
             itemCount = 0
             for aiItem in ifAi.getAiList():
                 itemCount += 1
-                print str(itemCount) + ") " + aiItem
+                print(str(itemCount) + ") " + aiItem)
 
-            choice = raw_input("choice:")
+            choice = input("choice:")
             if choice.isdigit():
                 choiceInt = int(choice) - 1
                 if len(aiList) >= choiceInt and choiceInt >= 0:
@@ -27,7 +27,7 @@ class console(object):
     def chooseAiGameRounds(self):
         validAnswer = False
         while not validAnswer:
-            choice = raw_input("how many rounds should the AI play:")
+            choice = input("how many rounds should the AI play:")
             if choice.isdigit():
                 return int(choice)
 
@@ -35,10 +35,10 @@ class console(object):
         validAnswer = False
         # ifAi = interfaceAi.interfaceAi()
         while not validAnswer:
-            print "Who should player", self.getPlayerName(playerId), "be?"
-            print "1) user"
-            print "2) CPU"
-            choice = raw_input("choice:")
+            print("Who should player", self.getPlayerName(playerId), "be?")
+            print("1) user")
+            print("2) CPU")
+            choice = input("choice:")
             if choice == "1":
                 return "user"
             elif choice == "2":
@@ -68,17 +68,17 @@ class console(object):
             finalTable += "\n"
             rowCount += 1
 
-        print finalTable
+        print(finalTable)
 
     def printStats(self, gl):
         self.printGameField(gl.getField())
-        print 13 * "*"
-        print "* WINNER:", self.getPlayerName(gl.getWinner()) + " *"
-        print 13 * "*"
-        print "total games:", gl.getPlayedRoundsCount()
-        print "X wins", gl.score[1], "matches"
-        print "O wins", gl.score[2], "matches"
-        print "draws ", gl.score[0], "matches"
+        print(13 * "*")
+        print("* WINNER:", self.getPlayerName(gl.getWinner()) + " *")
+        print(13 * "*")
+        print("total games:", gl.getPlayedRoundsCount())
+        print("X wins", gl.score[1], "matches")
+        print("O wins", gl.score[2], "matches")
+        print("draws ", gl.score[0], "matches")
 
     def printProgress(self, currentGame, maxGame):
         """
@@ -100,17 +100,17 @@ class console(object):
             x = currentGame * 100
             y = x / maxGame
             z = int(y) / 2
-            tmpStr = '[' + '{:<50}'.format(z * "#") + ']'
-            print tmpStr
+            tmpStr = '[' + '{:<50}'.format(int(z) * "#") + ']'
+            print(tmpStr)
             formatStr = '{:^' + str(len(tmpStr)) + '}'
-            print formatStr.format(str(currentGame) + ' / ' + str(maxGame))
+            print(formatStr.format(str(currentGame) + ' / ' + str(maxGame)))
 
     def getUserInput(self):
         cords = []
 
         while len(cords) != 2:
             cords = []
-            choose = raw_input('type XY-coordinates: ')
+            choose = input('type XY-coordinates: ')
             for c in choose:
                 if c.isdigit():
                     cInt = int(c)
@@ -123,7 +123,7 @@ class console(object):
         validAnswer = False
         answer = False
         while not validAnswer:
-            yesNo = raw_input('play again? Y/n')
+            yesNo = input('play again? Y/n')
 
             if yesNo.lower() in self.yes:
                 validAnswer = True
