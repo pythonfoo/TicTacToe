@@ -16,9 +16,8 @@ class interfaceAi():
         return aiList
 
     def initAi(self, aiId, playerId):
-        # self,ai = map(__import__, [self.getAiList()[aiId] + "", ])
         self.aiMap = importlib.import_module("ai." + self.getAiList()[aiId], "ai")
-        self.ai = self.aiMap.ai(playerId)
+        self.ai = self.aiMap.Ai(playerId)
 
         # self.aiMap = __import__("ai." + self.getAiList()[aiId])
 

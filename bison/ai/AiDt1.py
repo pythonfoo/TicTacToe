@@ -2,10 +2,10 @@ import ai.Base as basicAi
 import random
 
 
-class ai(basicAi.ai):
+class Ai(basicAi.Ai):
     def __init__(self, playerId):
-        # init the basic ai class
-        basicAi.ai.__init__(self, playerId)
+        # init the basic Ai class
+        basicAi.Ai.__init__(self, playerId)
 
         self.enemyId = 0
         if self.playerId == 1:
@@ -183,35 +183,35 @@ class ai(basicAi.ai):
 
 if __name__ == "__main__":
     # check some decisions
-    _ai = ai(2)
+    _ai = Ai(2)
     gameField = [[1, 0, 0],
                  [0, 2, 0],
                  [0, 1, 0]]
     print('action:', _ai.getAiAction(gameField))
 
     # check left-right
-    _ai = ai(2)
+    _ai = Ai(2)
     gameField = [[2, 0, 0],
                  [0, 0, 0],
                  [1, 1, 0]]
     print('action:', _ai.getAiAction(gameField))
 
     # check top-down
-    _ai = ai(2)
+    _ai = Ai(2)
     gameField = [[2, 1, 0],
                  [0, 1, 0],
                  [0, 0, 0]]
     print('action:', _ai.getAiAction(gameField))
 
     # check diag Lo-Ru
-    _ai = ai(1)
+    _ai = Ai(1)
     gameField = [[2, 1, 0],
                  [0, 2, 0],
                  [1, 0, 0]]
     print('action:', _ai.getAiAction(gameField))
 
     # check diag Ro-Lu
-    _ai = ai(1)
+    _ai = Ai(1)
     gameField = [[0, 1, 2],
                  [0, 2, 0],
                  [0, 0, 1]]

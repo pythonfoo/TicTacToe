@@ -2,10 +2,10 @@ import ai.Base as basicAi
 import random
 
 
-class ai(basicAi.ai):
+class Ai(basicAi.Ai):
     def __init__(self, playerId):
-        # init the basic ai class
-        basicAi.ai.__init__(self, playerId)
+        # init the basic Ai class
+        basicAi.Ai.__init__(self, playerId)
         self.fieldSize = range(3)
 
     def _getFreePositions(self, gameField):
