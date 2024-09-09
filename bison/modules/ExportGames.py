@@ -10,7 +10,8 @@ class ExportGames(object):
         self.player2 = np.full((1, 3, 3), -1)
         self.win_lose = np.full((1, 2), -1)
 
-    def get_p1_field(self, x):
+    @staticmethod
+    def get_p1_field(x):
         if x == 2:
             return 0
         else:
@@ -36,13 +37,6 @@ class ExportGames(object):
             row = game_field[i]
             player1_field[i] = [self.get_p1_field(x) for x in row]
             player2_field[i] = [self.get_p2_field(x) for x in row]
-
-            #for y in row:
-            #    if y == 1:
-            #        pass
-        #print player1_field
-        #print player2_field
-        #print self.win_lose[self.game_index]
 
         self.player1[game_index] = player1_field
         self.player2[game_index] = player2_field

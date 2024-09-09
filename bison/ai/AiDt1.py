@@ -1,10 +1,10 @@
 import random
 from abc import ABC
 
-import ai.Base as basicAi
+from ai.Base import Ai as AiBase
 
 
-class Ai(basicAi.Ai, ABC):
+class Ai(AiBase, ABC):
     def __init__(self, player_id):
         # init the basic Ai class
         super().__init__(player_id)
@@ -24,23 +24,12 @@ class Ai(basicAi.Ai, ABC):
         self.count_fields_enemy = 0
         self.count_fields_player = 0
 
-        # def _fieldContainsEnemy(self, field_content):
-
-    #	if self.enemy_id == field_content:
-    #		return 1
-    #	return 0
-
-    def _field_contains(self, _id, field_content):
+    @staticmethod
+    def _field_contains(_id, field_content):
         if _id == field_content:
             return 1
 
         return 0
-
-    #def _fieldIsSet(self, field_content):
-    #	if field_content > 0:
-    #		return 1
-    #	else:
-    #		return 0
 
     def _get_save_pos_row(self, row):
         # check if row is ful!
@@ -76,9 +65,10 @@ class Ai(basicAi.Ai, ABC):
             for cell in self.field_size:
                 if game_field[row][cell] == 0:
                     free_coords.append([row, cell])
+
         return free_coords
 
-    def _get_strat_pos_row(self, row):
+    def _get_strategic_pos_row(self, row):
         # check if row is ful!
         if row[0] == 0 and row[1] == 0 and row[2] == 0:
             return []
@@ -99,29 +89,27 @@ class Ai(basicAi.Ai, ABC):
 
     def _get_strategic_pos(self, game_field):
         strategic_positions = []
-        #if self.count_fields_player == 0
-        #self.count_fields_enemy = 0
+
         for row in self.field_size:
-            tmp_positions = self._get_strat_pos_row([game_field[row][0], game_field[row][1], game_field[row][2]])
+            tmp_positions = self._get_strategic_pos_row([game_field[row][0], game_field[row][1], game_field[row][2]])
             for pos in tmp_positions:
                 strategic_positions.append([row, pos])
 
-            tmp_positions = self._get_strat_pos_row([game_field[0][row], game_field[1][row], game_field[2][row]])
+            tmp_positions = self._get_strategic_pos_row([game_field[0][row], game_field[1][row], game_field[2][row]])
             for pos in tmp_positions:
                 strategic_positions.append([pos, row])
 
-        tmp_positions = self._get_strat_pos_row([game_field[0][0], game_field[1][1], game_field[2][2]])
+        tmp_positions = self._get_strategic_pos_row([game_field[0][0], game_field[1][1], game_field[2][2]])
         for pos in tmp_positions:
             strategic_positions.append([pos, pos])
 
-        tmp_positions = self._get_strat_pos_row([game_field[0][2], game_field[1][1], game_field[2][0]])
+        tmp_positions = self._get_strategic_pos_row([game_field[0][2], game_field[1][1], game_field[2][0]])
         for pos in tmp_positions:
             strategic_positions.append([pos, self.field_size_rev[pos]])
 
         return strategic_positions
 
     def get_ai_action(self, game_field):
-        #print game_field
         pos_x = -1
         pos_y = -1
 
@@ -130,7 +118,7 @@ class Ai(basicAi.Ai, ABC):
         save_position_y = -1
 
         # save pos for row
-        if have_save_position == False:
+        if not have_save_position:
             for rowX in self.field_size:
                 save_position_y = self._get_save_pos_row(game_field[rowX])
                 if save_position_y != -1:
@@ -139,7 +127,7 @@ class Ai(basicAi.Ai, ABC):
                     break
 
         # save pos for colum
-        if have_save_position == False:
+        if not have_save_position:
             for col_y in self.field_size:
                 col_ar = [game_field[0][col_y], game_field[1][col_y], game_field[2][col_y]]
                 save_position_x = self._get_save_pos_row(col_ar)
@@ -149,7 +137,7 @@ class Ai(basicAi.Ai, ABC):
                     break
 
         # save pos for diag LoRu
-        if have_save_position == False:
+        if not have_save_position:
             col_ar = [game_field[0][0], game_field[1][1], game_field[2][2]]
             save_position_y = self._get_save_pos_row(col_ar)
             if save_position_y != -1:
@@ -157,7 +145,7 @@ class Ai(basicAi.Ai, ABC):
                 have_save_position = True
 
         # save pos for diag RoLu
-        if have_save_position == False:
+        if not have_save_position:
             col_ar = [game_field[0][2], game_field[1][1], game_field[2][0]]
             save_position_x = self._get_save_pos_row(col_ar)
             if save_position_x != -1:
@@ -176,7 +164,7 @@ class Ai(basicAi.Ai, ABC):
                 pos_y = 1
             else:
                 strategic_pos = self._get_strategic_pos(game_field)
-                if strategic_pos != None and strategic_pos != []:
+                if strategic_pos is not None and strategic_pos:
                     pos_x, pos_y = random.choice(strategic_pos)
                 else:
                     pos_x, pos_y = random.choice(self._get_free_positions(game_field))

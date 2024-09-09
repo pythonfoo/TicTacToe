@@ -26,7 +26,8 @@ class InterfaceConsole:
                 if len(ai_list) >= choice_int and choice_int >= 0:
                     return choice_int
 
-    def choose_ai_game_rounds(self):
+    @staticmethod
+    def choose_ai_game_rounds():
         valid_answer = False
         while not valid_answer:
             choice = input("how many rounds should the AI play:")
@@ -47,7 +48,8 @@ class InterfaceConsole:
             elif choice == "2":
                 return "ai"
 
-    def get_player_name(self, player_id):
+    @staticmethod
+    def get_player_name(player_id):
         if player_id == 0:
             return "-"
         elif player_id == 1:
@@ -85,7 +87,7 @@ class InterfaceConsole:
 
     def print_progress(self, current_game, max_game):
         """
-        http://www.prozentrechnung.net/
+        https://www.prozentrechnung.net/
         function prozentrechner2 ()
         {
         x = document.formular2.x.value*100;
@@ -108,7 +110,8 @@ class InterfaceConsole:
             format_str = '{:^' + str(len(tmp_str)) + '}'
             print(format_str.format(str(current_game) + ' / ' + str(max_game)))
 
-    def get_user_input(self):
+    @staticmethod
+    def get_user_input():
         cords = []
 
         while len(cords) != 2:
@@ -120,6 +123,7 @@ class InterfaceConsole:
                     # if cInt >= 0 and cInt <= 2:
                     if 0 <= c_int <= 2:
                         cords.append(c_int)
+
         return cords
 
     def play_again(self):

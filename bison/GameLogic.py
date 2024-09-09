@@ -97,65 +97,27 @@ class GameLogic:
                 horizontals[x] += add_val
                 verticals[y] += add_val
 
-                # my math sucks!
-                #if x+y == 0 or x+y == 2 or x+y == 4:
-                #    diagonalLR += addVal
-                #if x+y == 2:
-                #    diagonalRL += addVal
-
         if 3 in horizontals or 3 in verticals or diagonal_lr == 3 or diagonal_rl == 3:
             game_over = True
             self.game_winner = 1
             if self.use_export:
-                #self.win_lose[self.game_index] = [1, 0]
                 self.export_games.set_win_lose(self.gameIndex, 1, 0)
 
         if 60 in horizontals or 60 in verticals or diagonal_lr == 60 or diagonal_rl == 60:
             game_over = True
             self.game_winner = 2
             if self.use_export:
-                #self.win_lose[self.game_index] = [0, 1]
                 self.export_games.set_win_lose(self.gameIndex, 0, 1)
 
         if not game_over and locked_fields == 9:
             game_over = True
             self.game_winner = 0
             if self.use_export:
-                #self.win_lose[self.game_index] = [0, 0]
                 self.export_games.set_win_lose(self.gameIndex, 0, 0)
 
         if game_over:
             self.score[self.game_winner] += 1
-            '''
-            player1_field = [-1, -1, -1]
-            player2_field = [-1, -1, -1]
-            def getP1Field(x):
-                if x == 2:
-                    return 0
-                else:
-                    return x
-            def getP2Field(x):
-                if x == 1:
-                    return 0
-                elif x == 2:
-                    return 1
-                else:
-                    return x
 
-            for i in range(len(self.game_field)):
-                row = self.game_field[i]
-                player1_field[i] = [ getP1Field(x) for x in row ]
-                player2_field[i] = [ getP2Field(x) for x in row ]
-
-                for y in row:
-                    if y == 1:
-                        pass
-            #print player1_field
-            #print player2_field
-            #print self.win_lose[self.game_index]
-
-            self.player1[self.game_index] = player1_field
-            self.player2[self.game_index] = player2_field'''
             if self.use_export:
                 self.export_games.set_play_field(self.gameIndex, self.game_field)
 

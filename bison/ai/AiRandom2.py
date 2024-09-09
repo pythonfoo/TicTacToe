@@ -1,10 +1,10 @@
 import random
 from abc import ABC
 
-import ai.Base as basicAi
+from ai.Base import Ai as AiBase
 
 
-class Ai(basicAi.Ai, ABC):
+class Ai(AiBase, ABC):
     def __init__(self, player_id):
         # init the basic Ai class
         super().__init__(player_id)
