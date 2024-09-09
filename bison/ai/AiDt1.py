@@ -1,4 +1,4 @@
-import ai.basic as basicAi
+import ai.Base as basicAi
 import random
 
 

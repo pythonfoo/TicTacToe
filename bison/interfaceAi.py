@@ -10,8 +10,8 @@ class interfaceAi():
 
     def getAiList(self):
         aiList = []
-        for aFile in os.listdir("ai"):
-            if "ai" in aFile and not "pyc" in aFile:
+        for aFile in os.listdir("Ai"):
+            if aFile.startswith("Ai") and not "pyc" in aFile:
                 aiList.append(aFile.replace(".py", ""))
         return aiList
 
