@@ -21,24 +21,24 @@ class interfaceAi():
 
         # self.aiMap = __import__("ai." + self.getAiList()[aiId])
 
-    #self.ai = self.aiMap.ai(playerId)
+    #self.ai = self.aiMap.ai(player_id)
 
     def getAiAction(self, gameField):
-        return self.ai.getAiAction(gameField)
+        return self.ai.get_ai_action(gameField)
 
     def newGameSetWinner(self, winner):
-        self.ai.setWinner(winner)
-        self.ai.newGame()
+        self.ai.set_winner(winner)
+        self.ai.new_game()
 
 
 if __name__ == "__main__":
-    import gameLogic
+    import Gamelogic
 
-    gl = gameLogic.gameLogic()
-    gl.startGame()
+    gl = gameLogic.Gamelogic()
+    gl.start_game()
     ifAi = interfaceAi()
     print("Ai-list:", ifAi.getAiList())
     ifAi.initAi(int(input("choose ai:")), 1)
-    gl.getNextPlayer()
-    gl.setPlayer(ifAi.getAiAction(None))
-    print(gl.getField())
+    gl.get_next_player()
+    gl.set_player(ifAi.getAiAction(None))
+    print(gl.get_field())

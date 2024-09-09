@@ -1,20 +1,23 @@
-import ai.Base as basicAi
 import random
+from abc import ABC
+
+import ai.Base as basicAi
 
 
-class Ai(basicAi.Ai):
-    def __init__(self, playerId):
+class Ai(basicAi.Ai, ABC):
+    def __init__(self, player_id):
         # init the basic Ai class
-        basicAi.Ai.__init__(self, playerId)
-        self.fieldSize = range(3)
+        super().__init__(player_id)
+        self.field_size = range(3)
 
-    def _getFreePositions(self, gameField):
-        freeCoords = []
-        for row in self.fieldSize:
-            for cell in self.fieldSize:
-                if gameField[row][cell] == 0:
-                    freeCoords.append([row, cell])
-        return freeCoords
+    def _get_free_positions(self, game_field):
+        free_coords = []
+        for row in self.field_size:
+            for cell in self.field_size:
+                if game_field[row][cell] == 0:
+                    free_coords.append([row, cell])
 
-    def getAiAction(self, gameField):
-        return random.choice(self._getFreePositions(gameField))
+        return free_coords
+
+    def get_ai_action(self, game_field):
+        return random.choice(self._get_free_positions(game_field))

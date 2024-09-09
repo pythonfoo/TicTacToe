@@ -1,12 +1,18 @@
+from abc import abstractmethod
+
+
 class Ai:
-    def __init__(self, playerId):
-        self.playerId = playerId
+    def __init__(self, player_id):
+        self.playerId = player_id
 
-    def getAiAction(self, gameField):
+    @abstractmethod
+    def get_ai_action(self, game_field):
         pass
 
-    def newGame(self):
+    @abstractmethod
+    def new_game(self):
         pass
 
-    def setWinner(self, winnerId):
+    @abstractmethod
+    def set_winner(self, winner_id):
         pass

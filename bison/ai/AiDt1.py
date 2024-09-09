@@ -1,184 +1,187 @@
-import ai.Base as basicAi
 import random
+from abc import ABC
+
+import ai.Base as basicAi
 
 
-class Ai(basicAi.Ai):
-    def __init__(self, playerId):
+class Ai(basicAi.Ai, ABC):
+    def __init__(self, player_id):
         # init the basic Ai class
-        basicAi.Ai.__init__(self, playerId)
+        super().__init__(player_id)
 
-        self.enemyId = 0
+        self.enemy_id = 0
         if self.playerId == 1:
-            self.enemyId = 2
+            self.enemy_id = 2
         else:
-            self.enemyId = 1
+            self.enemy_id = 1
 
-        self.fieldSize = range(3)
-        self.fieldSizeRev = range(2, -1, -1)
-        self.countFieldsEnemy = 0
-        self.countFieldsPlayer = 0
+        self.field_size = range(3)
+        self.field_size_rev = range(2, -1, -1)
+        self.count_fields_enemy = 0
+        self.count_fields_player = 0
 
-    def newGame(self):
-        self.countFieldsEnemy = 0
-        self.countFieldsPlayer = 0
+    def new_game(self):
+        self.count_fields_enemy = 0
+        self.count_fields_player = 0
 
-        # def _fieldContainsEnemy(self, fieldContent):
+        # def _fieldContainsEnemy(self, field_content):
 
-    #	if self.enemyId == fieldContent:
+    #	if self.enemy_id == field_content:
     #		return 1
     #	return 0
 
-    def _fieldContains(self, _id, fieldContent):
-        if _id == fieldContent:
+    def _field_contains(self, _id, field_content):
+        if _id == field_content:
             return 1
+
         return 0
 
-    #def _fieldIsSet(self, fieldContent):
-    #	if fieldContent > 0:
+    #def _fieldIsSet(self, field_content):
+    #	if field_content > 0:
     #		return 1
     #	else:
     #		return 0
 
-    def _getSavePosRow(self, row):
+    def _get_save_pos_row(self, row):
         # check if row is ful!
         if row[0] > 0 and row[1] > 0 and row[2] > 0:
             return -1
 
-        ownageEnemyCount = 0
-        ownagePlayerCount = 0
+        ownage_enemy_count = 0
+        ownage_player_count = 0
         for col in row:
-            ownageEnemyCount += self._fieldContains(self.enemyId, col)
-            ownagePlayerCount += self._fieldContains(self.playerId, col)
+            ownage_enemy_count += self._field_contains(self.enemy_id, col)
+            ownage_player_count += self._field_contains(self.playerId, col)
 
-        if ownageEnemyCount == 2 or ownagePlayerCount == 2:
-            for col in self.fieldSize:
+        if ownage_enemy_count == 2 or ownage_player_count == 2:
+            for col in self.field_size:
                 if row[col] == 0:
                     return col
 
         return -1
 
-    def _countFieldUsage(self, gameField):
-        self.countFieldsPlayer = 0
-        self.countFieldsEnemy = 0
-        for row in gameField:
+    def _count_field_usage(self, game_field):
+        self.count_fields_player = 0
+        self.count_fields_enemy = 0
+        for row in game_field:
             for cell in row:
                 if cell == self.playerId:
-                    self.countFieldsPlayer += 1
-                elif cell == self.enemyId:
-                    self.countFieldsEnemy += 1
+                    self.count_fields_player += 1
+                elif cell == self.enemy_id:
+                    self.count_fields_enemy += 1
 
-    def _getFreePositions(self, gameField):
-        freeCoords = []
-        for row in self.fieldSize:
-            for cell in self.fieldSize:
-                if gameField[row][cell] == 0:
-                    freeCoords.append([row, cell])
-        return freeCoords
+    def _get_free_positions(self, game_field):
+        free_coords = []
+        for row in self.field_size:
+            for cell in self.field_size:
+                if game_field[row][cell] == 0:
+                    free_coords.append([row, cell])
+        return free_coords
 
-    def _getStratPosRow(self, row):
+    def _get_strat_pos_row(self, row):
         # check if row is ful!
         if row[0] == 0 and row[1] == 0 and row[2] == 0:
             return []
 
-        ownageEnemyCount = 0
-        ownagePlayerCount = 0
+        ownage_enemy_count = 0
+        ownage_player_count = 0
         for col in row:
-            ownageEnemyCount += self._fieldContains(self.enemyId, col)
-            ownagePlayerCount += self._fieldContains(self.playerId, col)
+            ownage_enemy_count += self._field_contains(self.enemy_id, col)
+            ownage_player_count += self._field_contains(self.playerId, col)
 
         positions = []
-        if ownageEnemyCount == 0 and ownagePlayerCount == 1:
-            for col in self.fieldSize:
+        if ownage_enemy_count == 0 and ownage_player_count == 1:
+            for col in self.field_size:
                 if row[col] == 0:
                     positions.append(col)
 
         return positions
 
-    def _getStrategicPos(self, gameField):
-        strategicPositions = []
-        #if self.countFieldsPlayer == 0
-        #self.countFieldsEnemy = 0
-        for row in self.fieldSize:
-            tmpPositions = self._getStratPosRow([gameField[row][0], gameField[row][1], gameField[row][2]])
-            for pos in tmpPositions:
-                strategicPositions.append([row, pos])
+    def _get_strategic_pos(self, game_field):
+        strategic_positions = []
+        #if self.count_fields_player == 0
+        #self.count_fields_enemy = 0
+        for row in self.field_size:
+            tmp_positions = self._get_strat_pos_row([game_field[row][0], game_field[row][1], game_field[row][2]])
+            for pos in tmp_positions:
+                strategic_positions.append([row, pos])
 
-            tmpPositions = self._getStratPosRow([gameField[0][row], gameField[1][row], gameField[2][row]])
-            for pos in tmpPositions:
-                strategicPositions.append([pos, row])
+            tmp_positions = self._get_strat_pos_row([game_field[0][row], game_field[1][row], game_field[2][row]])
+            for pos in tmp_positions:
+                strategic_positions.append([pos, row])
 
-        tmpPositions = self._getStratPosRow([gameField[0][0], gameField[1][1], gameField[2][2]])
-        for pos in tmpPositions:
-            strategicPositions.append([pos, pos])
+        tmp_positions = self._get_strat_pos_row([game_field[0][0], game_field[1][1], game_field[2][2]])
+        for pos in tmp_positions:
+            strategic_positions.append([pos, pos])
 
-        tmpPositions = self._getStratPosRow([gameField[0][2], gameField[1][1], gameField[2][0]])
-        for pos in tmpPositions:
-            strategicPositions.append([pos, self.fieldSizeRev[pos]])
+        tmp_positions = self._get_strat_pos_row([game_field[0][2], game_field[1][1], game_field[2][0]])
+        for pos in tmp_positions:
+            strategic_positions.append([pos, self.field_size_rev[pos]])
 
-        return strategicPositions
+        return strategic_positions
 
-    def getAiAction(self, gameField):
-        #print gameField
-        posX = -1
-        posY = -1
+    def get_ai_action(self, game_field):
+        #print game_field
+        pos_x = -1
+        pos_y = -1
 
-        haveSavePos = False
-        savePosX = -1
-        savePosY = -1
+        have_save_position = False
+        save_position_x = -1
+        save_position_y = -1
 
         # save pos for row
-        if haveSavePos == False:
-            for rowX in self.fieldSize:
-                savePosY = self._getSavePosRow(gameField[rowX])
-                if savePosY != -1:
-                    savePosX = rowX
-                    haveSavePos = True
+        if have_save_position == False:
+            for rowX in self.field_size:
+                save_position_y = self._get_save_pos_row(game_field[rowX])
+                if save_position_y != -1:
+                    save_position_x = rowX
+                    have_save_position = True
                     break
 
         # save pos for colum
-        if haveSavePos == False:
-            for colY in self.fieldSize:
-                colAr = [gameField[0][colY], gameField[1][colY], gameField[2][colY]]
-                savePosX = self._getSavePosRow(colAr)
-                if savePosX != -1:
-                    savePosY = colY
-                    haveSavePos = True
+        if have_save_position == False:
+            for col_y in self.field_size:
+                col_ar = [game_field[0][col_y], game_field[1][col_y], game_field[2][col_y]]
+                save_position_x = self._get_save_pos_row(col_ar)
+                if save_position_x != -1:
+                    save_position_y = col_y
+                    have_save_position = True
                     break
 
         # save pos for diag LoRu
-        if haveSavePos == False:
-            colAr = [gameField[0][0], gameField[1][1], gameField[2][2]]
-            savePosY = self._getSavePosRow(colAr)
-            if savePosY != -1:
-                savePosX = savePosY
-                haveSavePos = True
+        if have_save_position == False:
+            col_ar = [game_field[0][0], game_field[1][1], game_field[2][2]]
+            save_position_y = self._get_save_pos_row(col_ar)
+            if save_position_y != -1:
+                save_position_x = save_position_y
+                have_save_position = True
 
         # save pos for diag RoLu
-        if haveSavePos == False:
-            colAr = [gameField[0][2], gameField[1][1], gameField[2][0]]
-            savePosX = self._getSavePosRow(colAr)
-            if savePosX != -1:
-                savePosY = self.fieldSizeRev[savePosX]
-                haveSavePos = True
+        if have_save_position == False:
+            col_ar = [game_field[0][2], game_field[1][1], game_field[2][0]]
+            save_position_x = self._get_save_pos_row(col_ar)
+            if save_position_x != -1:
+                save_position_y = self.field_size_rev[save_position_x]
+                have_save_position = True
 
-        if haveSavePos:
-            posX = savePosX
-            posY = savePosY
+        if have_save_position:
+            pos_x = save_position_x
+            pos_y = save_position_y
         else:
-            self._countFieldUsage(gameField)
+            self._count_field_usage(game_field)
             # take the middle in first round or if still empty
-            if (self.countFieldsPlayer == 0 and self.countFieldsEnemy == 0) or (
-                    (self.countFieldsEnemy + self.countFieldsPlayer) == 1 and gameField[1][1] == 0):
-                posX = 1
-                posY = 1
+            if (self.count_fields_player == 0 and self.count_fields_enemy == 0) or (
+                    (self.count_fields_enemy + self.count_fields_player) == 1 and game_field[1][1] == 0):
+                pos_x = 1
+                pos_y = 1
             else:
-                strategicPos = self._getStrategicPos(gameField)
-                if strategicPos != None and strategicPos != []:
-                    posX, posY = random.choice(strategicPos)
+                strategic_pos = self._get_strategic_pos(game_field)
+                if strategic_pos != None and strategic_pos != []:
+                    pos_x, pos_y = random.choice(strategic_pos)
                 else:
-                    posX, posY = random.choice(self._getFreePositions(gameField))
+                    pos_x, pos_y = random.choice(self._get_free_positions(game_field))
 
-        return [posX, posY]
+        return [pos_x, pos_y]
 
 
 if __name__ == "__main__":
@@ -187,33 +190,32 @@ if __name__ == "__main__":
     gameField = [[1, 0, 0],
                  [0, 2, 0],
                  [0, 1, 0]]
-    print('action:', _ai.getAiAction(gameField))
+    print('action:', _ai.get_ai_action(gameField))
 
     # check left-right
     _ai = Ai(2)
     gameField = [[2, 0, 0],
                  [0, 0, 0],
                  [1, 1, 0]]
-    print('action:', _ai.getAiAction(gameField))
+    print('action:', _ai.get_ai_action(gameField))
 
     # check top-down
     _ai = Ai(2)
     gameField = [[2, 1, 0],
                  [0, 1, 0],
                  [0, 0, 0]]
-    print('action:', _ai.getAiAction(gameField))
+    print('action:', _ai.get_ai_action(gameField))
 
     # check diag Lo-Ru
     _ai = Ai(1)
     gameField = [[2, 1, 0],
                  [0, 2, 0],
                  [1, 0, 0]]
-    print('action:', _ai.getAiAction(gameField))
+    print('action:', _ai.get_ai_action(gameField))
 
     # check diag Ro-Lu
     _ai = Ai(1)
     gameField = [[0, 1, 2],
                  [0, 2, 0],
                  [0, 0, 1]]
-    print('action:', _ai.getAiAction(gameField))
-
+    print('action:', _ai.get_ai_action(gameField))

@@ -71,11 +71,11 @@ class console():
         print(finalTable)
 
     def printStats(self, gl):
-        self.printGameField(gl.getField())
+        self.printGameField(gl.get_field())
         print(13 * "*")
         print("* WINNER:", self.getPlayerName(gl.getWinner()) + " *")
         print(13 * "*")
-        print("total games:", gl.getPlayedRoundsCount())
+        print("total games:", gl.get_played_rounds_count())
         print("X wins", gl.score[1], "matches")
         print("O wins", gl.score[2], "matches")
         print("draws ", gl.score[0], "matches")
