@@ -1,10 +1,11 @@
 import time
+
 from GameLogic import GameLogic
 from InterfaceConsole import InterfaceConsole
 from InterfaceAi import InterfaceAi
 
 players = ["placeholder", ]
-aiInstances = ["placeholder", None, None]
+ai_Instances = ["placeholder", None, None]
 
 gl = GameLogic()
 gl.start_game()
@@ -13,63 +14,63 @@ ic = InterfaceConsole()
 players.append(ic.choose_player(1))
 players.append(ic.choose_player(2))
 
-for playerId in range(len(players)):
-    if players[playerId] == "ai":
-        pickedAiId = ic.choose_ai(playerId)
-        aiInstances[playerId] = InterfaceAi()
-        aiInstances[playerId].init_ai(pickedAiId, playerId)
+for player_id in range(len(players)):
+    if players[player_id] == "ai":
+        picked_ai_id = ic.choose_ai(player_id)
+        ai_Instances[player_id] = InterfaceAi()
+        ai_Instances[player_id].init_ai(picked_ai_id, player_id)
 
-aiGameRounds = 0
-drawGameField = True
+ai_game_rounds = 0
+draw_game_field = True
 if players[1] == "ai" and players[2] == "ai":
-    aiGameRounds = ic.choose_ai_game_rounds()
-    gl.set_export(aiGameRounds)
+    ai_game_rounds = ic.choose_ai_game_rounds()
+    gl.set_export(ai_game_rounds)
     # print game field for every move
-    #drawGameField = False
+    #draw_game_field = False
 
-startTime = time.time()
-keepPlaying = True
-while keepPlaying:
+start_time = time.time()
+keep_playing = True
+while keep_playing:
     if gl.is_game_over():
 
         # tell the AIs what happened
         if players[1] == "ai":
-            aiInstances[1].new_game_set_winner(gl.getWinner())
+            ai_Instances[1].new_game_set_winner(gl.getWinner())
 
         if players[2] == "ai":
-            aiInstances[2].new_game_set_winner(gl.getWinner())
+            ai_Instances[2].new_game_set_winner(gl.getWinner())
 
-        if aiGameRounds == 0:
+        if ai_game_rounds == 0:
             ic.print_stats(gl)
-            keepPlaying = ic.play_again()
-        elif aiGameRounds > gl.get_played_rounds_count():
-            ic.print_progress(gl.get_played_rounds_count(), aiGameRounds)
-            keepPlaying = True
+            keep_playing = ic.play_again()
+        elif ai_game_rounds > gl.get_played_rounds_count():
+            ic.print_progress(gl.get_played_rounds_count(), ai_game_rounds)
+            keep_playing = True
         else:
-            ic.print_progress(gl.get_played_rounds_count(), aiGameRounds)
+            ic.print_progress(gl.get_played_rounds_count(), ai_game_rounds)
             ic.print_stats(gl)
-            keepPlaying = False
+            keep_playing = False
 
-        if keepPlaying:
+        if keep_playing:
             gl.start_game()
 
     else:
-        nextPlayer = gl.get_next_player()
+        next_player = gl.get_next_player()
 
-        if drawGameField:
+        if draw_game_field:
             ic.print_game_field(gl.get_field())
-            print("Player", ic.get_player_name(nextPlayer))
+            print("Player", ic.get_player_name(next_player))
 
-        if players[nextPlayer] == "user":
-            setWasOk = False
-            while not setWasOk:
-                setWasOk = gl.set_player(ic.get_user_input())
+        if players[next_player] == "user":
+            set_was_ok = False
+            while not set_was_ok:
+                set_was_ok = gl.set_player(ic.get_user_input())
         else:
-            setWasOk = False
-            while not setWasOk:
-                aiAction = aiInstances[nextPlayer].get_ai_action(gl.get_field())
-                setWasOk = gl.set_player(aiAction)
+            set_was_ok = False
+            while not set_was_ok:
+                ai_action = ai_Instances[next_player].get_ai_action(gl.get_field())
+                set_was_ok = gl.set_player(ai_action)
 
 gl.save_export()
 print('')
-print("playtime:", time.time() - startTime)
+print("playtime:", time.time() - start_time)
