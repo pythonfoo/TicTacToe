@@ -1,10 +1,7 @@
-import pickle
-import numpy as np
-
-import modules.exportGames
+import modules.ExportGames
 
 
-class Gamelogic:
+class GameLogic:
     def __init__(self):
         self.coord = list(range(3))
         self.reversed_coord = list(range(3))
@@ -18,19 +15,19 @@ class Gamelogic:
         self.score = {0: 0, 1: 0, 2: 0}
 
         self.use_export = False
-        self.export_games = modules.exportGames.exportGames()
+        self.export_games = modules.ExportGames.ExportGames()
         self.gameIndex = 0
 
     def set_export(self, amount):
         self.use_export = True
-        self.export_games.setExport(amount)
+        self.export_games.set_export(amount)
         # [1, 0] player 1 wins
         # [0, 1] player 2 wins
         # [0, 0] draw
 
     def save_export(self):
         if self.use_export:
-            self.export_games.saveExport()
+            self.export_games.save_export()
         
     def get_played_rounds_count(self):
         return self.score[0] + self.score[1] + self.score[2]
@@ -110,22 +107,22 @@ class Gamelogic:
             game_over = True
             self.game_winner = 1
             if self.use_export:
-                #self.winLose[self.gameIndex] = [1, 0]
-                self.export_games.setWinLose(self.gameIndex, 1, 0)
+                #self.win_lose[self.game_index] = [1, 0]
+                self.export_games.set_win_lose(self.gameIndex, 1, 0)
 
         if 60 in horizontals or 60 in verticals or diagonal_lr == 60 or diagonal_rl == 60:
             game_over = True
             self.game_winner = 2
             if self.use_export:
-                #self.winLose[self.gameIndex] = [0, 1]
-                self.export_games.setWinLose(self.gameIndex, 0, 1)
+                #self.win_lose[self.game_index] = [0, 1]
+                self.export_games.set_win_lose(self.gameIndex, 0, 1)
 
         if not game_over and locked_fields == 9:
             game_over = True
             self.game_winner = 0
             if self.use_export:
-                #self.winLose[self.gameIndex] = [0, 0]
-                self.export_games.setWinLose(self.gameIndex, 0, 0)
+                #self.win_lose[self.game_index] = [0, 0]
+                self.export_games.set_win_lose(self.gameIndex, 0, 0)
 
         if game_over:
             self.score[self.game_winner] += 1
@@ -155,12 +152,12 @@ class Gamelogic:
                         pass
             #print player1_field
             #print player2_field
-            #print self.winLose[self.gameIndex]
+            #print self.win_lose[self.game_index]
 
-            self.player1[self.gameIndex] = player1_field
-            self.player2[self.gameIndex] = player2_field'''
+            self.player1[self.game_index] = player1_field
+            self.player2[self.game_index] = player2_field'''
             if self.use_export:
-                self.export_games.setPlayField(self.gameIndex, self.game_field)
+                self.export_games.set_play_field(self.gameIndex, self.game_field)
 
             self.gameIndex += 1
 
@@ -171,7 +168,7 @@ class Gamelogic:
 
 
 if __name__ == "__main__":
-    gl = Gamelogic()
+    gl = GameLogic()
     gl.start_game()
     print(gl.get_current_player())
     print(gl.get_next_player())
@@ -179,7 +176,7 @@ if __name__ == "__main__":
     print(gl.get_field())
 
     # BAD for full field check ;)
-    #  0 1 2
-    #0 X X X
-    #1 X O O
-    #2 X O O
+    #   0 1 2
+    # 0 X X X
+    # 1 X O O
+    # 2 X O O
